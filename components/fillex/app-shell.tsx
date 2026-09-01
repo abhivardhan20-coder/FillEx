@@ -14,6 +14,7 @@ import {
   Menu,
   PieChart,
   Search,
+  Sparkles,
   X,
 } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
@@ -26,6 +27,7 @@ const navigation = [
   { href: '/portfolio', label: 'Portfolio', icon: PieChart },
   { href: '/markets', label: 'Markets', icon: BarChart3 },
   { href: '/intelligence', label: 'Intelligence', icon: BrainCircuit },
+  { href: '/rag', label: 'RAG Lab', icon: Sparkles },
   { href: '/filings', label: 'Filings', icon: FileText },
   { href: '/integrations', label: 'Integrations', icon: Cable },
 ];
