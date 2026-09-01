@@ -1,21 +1,81 @@
+'use client';
+
 import Link from 'next/link';
 import {
   ArrowRight,
   Check,
+  Eye,
+  EyeOff,
+  LoaderCircle,
   LockKeyhole,
+  Mail,
   ShieldCheck,
   Sparkles,
+  UserRound,
 } from 'lucide-react';
+import { useState, type SyntheticEvent } from 'react';
 
 import { BrokerMark } from '@/components/fillex/broker-mark';
 import { buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { brokerProviders } from '@/lib/brokers/providers';
 import { cn } from '@/lib/utils';
 
-/* oxlint-disable next/no-html-link-for-pages -- Sites owns the SIWC route and requires top-level navigation. */
-
 export function AuthScreen({ mode }: { mode: 'login' | 'signup' }) {
   const signingUp = mode === 'signup';
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    remember: true,
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  function updateField(field: keyof typeof form, value: string | boolean) {
+    setForm((current) => ({ ...current, [field]: value }));
+  }
+
+  async function submit(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
+    event.preventDefault();
+    setError('');
+    if (signingUp && form.password !== form.confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const response = await fetch(
+        signingUp ? '/api/auth/signup' : '/api/auth/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(form),
+        },
+      );
+      const payload = (await response.json()) as {
+        error?: string;
+        redirectTo?: string;
+      };
+      if (!response.ok || !payload.redirectTo)
+        throw new Error(
+          payload.error || 'Authentication could not be completed.',
+        );
+      window.location.assign(payload.redirectTo);
+    } catch (reason) {
+      setError(
+        reason instanceof Error
+          ? reason.message
+          : 'Authentication could not be completed.',
+      );
+      setSubmitting(false);
+    }
+  }
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#f7f7fc] px-5 py-6 text-slate-950 md:px-8 md:py-8">
@@ -129,23 +189,183 @@ export function AuthScreen({ mode }: { mode: 'login' | 'signup' }) {
             </h2>
             <p className="mt-4 text-sm leading-6 text-slate-600">
               {signingUp
-                ? 'One secure identity gives you a private FillEx workspace. No separate password to remember.'
-                : 'Continue with your secure ChatGPT identity to access your brokers and portfolio.'}
+                ? 'Create your private FillEx workspace, then choose the broker you want to connect.'
+                : 'Enter your FillEx account details to access your brokers and portfolio.'}
             </p>
 
-            <a
-              href="/signin-with-chatgpt?return_to=/brokers"
-              target="_top"
-              className={cn(
-                buttonVariants({ size: 'lg' }),
-                'mt-8 h-12 w-full rounded-xl bg-violet-600 text-base shadow-lg shadow-violet-600/20 hover:bg-violet-500',
+            <form onSubmit={submit} className="mt-8 space-y-4">
+              {signingUp && (
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-1.5 block text-sm font-semibold text-slate-700"
+                  >
+                    Full name
+                  </label>
+                  <div className="relative">
+                    <UserRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+                    <Input
+                      id="name"
+                      name="name"
+                      value={form.name}
+                      onChange={(event) =>
+                        updateField('name', event.target.value)
+                      }
+                      autoComplete="name"
+                      placeholder="Your full name"
+                      minLength={2}
+                      maxLength={80}
+                      required
+                      className="h-11 pl-10"
+                    />
+                  </div>
+                </div>
               )}
-            >
-              {signingUp
-                ? 'Create account with ChatGPT'
-                : 'Sign in with ChatGPT'}{' '}
-              <ArrowRight />
-            </a>
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-1.5 block text-sm font-semibold text-slate-700"
+                >
+                  Email address
+                </label>
+                <div className="relative">
+                  <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={(event) =>
+                      updateField('email', event.target.value)
+                    }
+                    autoComplete="email"
+                    inputMode="email"
+                    placeholder="you@example.com"
+                    maxLength={254}
+                    required
+                    className="h-11 pl-10"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="mb-1.5 block text-sm font-semibold text-slate-700"
+                >
+                  Password
+                </label>
+                <div className="relative">
+                  <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+                  <Input
+                    id="password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={form.password}
+                    onChange={(event) =>
+                      updateField('password', event.target.value)
+                    }
+                    autoComplete={
+                      signingUp ? 'new-password' : 'current-password'
+                    }
+                    placeholder={
+                      signingUp
+                        ? 'At least 10 characters'
+                        : 'Enter your password'
+                    }
+                    minLength={10}
+                    maxLength={128}
+                    required
+                    className="h-11 px-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((visible) => !visible)}
+                    aria-label={
+                      showPassword ? 'Hide password' : 'Show password'
+                    }
+                    className="absolute right-2 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="size-4" />
+                    ) : (
+                      <Eye className="size-4" />
+                    )}
+                  </button>
+                </div>
+                {signingUp && (
+                  <p className="mt-1.5 text-xs text-slate-500">
+                    Use uppercase, lowercase, a number, and at least 10
+                    characters.
+                  </p>
+                )}
+              </div>
+              {signingUp && (
+                <div>
+                  <label
+                    htmlFor="confirmPassword"
+                    className="mb-1.5 block text-sm font-semibold text-slate-700"
+                  >
+                    Confirm password
+                  </label>
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showPassword ? 'text' : 'password'}
+                    value={form.confirmPassword}
+                    onChange={(event) =>
+                      updateField('confirmPassword', event.target.value)
+                    }
+                    autoComplete="new-password"
+                    placeholder="Enter the password again"
+                    minLength={10}
+                    maxLength={128}
+                    required
+                    className="h-11"
+                  />
+                </div>
+              )}
+              {!signingUp && (
+                <label className="flex cursor-pointer items-center gap-2.5 text-sm text-slate-600">
+                  <input
+                    type="checkbox"
+                    checked={form.remember}
+                    onChange={(event) =>
+                      updateField('remember', event.target.checked)
+                    }
+                    className="size-4 rounded border-slate-300 accent-violet-600"
+                  />
+                  Keep me signed in for 30 days
+                </label>
+              )}
+              {error && (
+                <p
+                  role="alert"
+                  className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2.5 text-sm text-rose-800"
+                >
+                  {error}
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={submitting}
+                className={cn(
+                  buttonVariants({ size: 'lg' }),
+                  'h-12 w-full rounded-xl bg-violet-600 text-base shadow-lg shadow-violet-600/20 hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-70',
+                )}
+              >
+                {submitting ? (
+                  <>
+                    <LoaderCircle className="animate-spin" />
+                    {signingUp ? 'Creating account…' : 'Signing in…'}
+                  </>
+                ) : (
+                  <>
+                    {signingUp ? 'Create FillEx account' : 'Sign in to FillEx'}{' '}
+                    <ArrowRight />
+                  </>
+                )}
+              </button>
+            </form>
 
             <div className="my-7 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[.16em] text-slate-400">
               <span className="h-px flex-1 bg-slate-200" />
@@ -157,11 +377,11 @@ export function AuthScreen({ mode }: { mode: 'login' | 'signup' }) {
                 <LockKeyhole className="mt-0.5 size-4 shrink-0 text-emerald-700" />
                 <div>
                   <p className="text-sm font-semibold">
-                    Your broker password never touches FillEx
+                    Passwords are salted and hashed
                   </p>
                   <p className="mt-1 text-xs leading-5 text-slate-500">
-                    Broker connections use supported authorization flows and
-                    request portfolio access only.
+                    FillEx stores a one-way password hash and protects your
+                    session with a secure HTTP-only cookie.
                   </p>
                 </div>
               </div>
