@@ -143,7 +143,7 @@ export function AuthScreen({ mode }: { mode: 'login' | 'signup' }) {
             >
               {signingUp
                 ? 'Create account with ChatGPT'
-                : 'Continue with ChatGPT'}{' '}
+                : 'Sign in with ChatGPT'}{' '}
               <ArrowRight />
             </a>
 

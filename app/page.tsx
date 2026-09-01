@@ -102,7 +102,7 @@ export default function LandingPage() {
                   Start with your portfolio <ArrowRight />
                 </Link>
                 <Link
-                  href="/markets"
+                  href="/signup"
                   className={cn(
                     buttonVariants({ variant: 'outline', size: 'lg' }),
                     'h-11 rounded-xl bg-white px-5 text-base',
@@ -240,7 +240,7 @@ export default function LandingPage() {
                   broker later without rebuilding your workflow.
                 </p>
                 <Link
-                  href="/portfolio"
+                  href="/signup"
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-violet-700"
                 >
                   Open portfolio <ArrowUpRight className="size-3.5" />
@@ -258,7 +258,7 @@ export default function LandingPage() {
                   fallback until a licensed live provider is connected.
                 </p>
                 <Link
-                  href="/markets"
+                  href="/signup"
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-violet-700"
                 >
                   Search markets <ArrowUpRight className="size-3.5" />
@@ -276,7 +276,7 @@ export default function LandingPage() {
                   interpretation, so the reasoning remains inspectable.
                 </p>
                 <Link
-                  href="/filings"
+                  href="/signup"
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-violet-700"
                 >
                   Review evidence <ArrowUpRight className="size-3.5" />
@@ -476,7 +476,7 @@ export default function LandingPage() {
                 Open FillEx <ArrowRight />
               </Link>
               <Link
-                href="/integrations"
+                href="/signup"
                 className={cn(
                   buttonVariants({ variant: 'outline', size: 'lg' }),
                   'h-11 rounded-xl px-5 text-base',
@@ -499,7 +499,7 @@ export default function LandingPage() {
             <Link href="/login" className="hover:text-slate-950">
               Sign in
             </Link>
-            <Link href="/integrations" className="hover:text-slate-950">
+            <Link href="/signup" className="hover:text-slate-950">
               Sources
             </Link>
           </div>
