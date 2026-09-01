@@ -58,13 +58,20 @@ export function AuthScreen({ mode }: { mode: 'login' | 'signup' }) {
           body: JSON.stringify(form),
         },
       );
-      const payload = (await response.json()) as {
+      const responseBody = await response.text();
+      let payload: {
         error?: string;
         redirectTo?: string;
       };
+      try {
+        payload = responseBody ? JSON.parse(responseBody) : {};
+      } catch {
+        payload = {};
+      }
       if (!response.ok || !payload.redirectTo)
         throw new Error(
-          payload.error || 'Authentication could not be completed.',
+          payload.error ||
+            'Authentication could not be completed. Please try again.',
         );
       window.location.assign(payload.redirectTo);
     } catch (reason) {

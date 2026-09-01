@@ -23,7 +23,7 @@ type PasswordAccount = {
   lockedUntil: string | null;
 };
 
-export async function POST(request: Request) {
+async function login(request: Request) {
   if (!trustedMutation(request))
     return NextResponse.json(
       { error: 'Request origin was not accepted.' },
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
       account.passwordIterations,
     );
   } else {
-    await hashPassword(password, 'RmlsbEV4QXV0aER1bW15U2FsdA', 210_000);
+    await hashPassword(password, 'RmlsbEV4QXV0aER1bW15U2FsdA');
   }
 
   if (!account || !passwordMatches) {
@@ -117,4 +117,16 @@ export async function POST(request: Request) {
   const response = NextResponse.json({ redirectTo: '/brokers' });
   setSessionCookie(response, session.token, session.expires);
   return response;
+}
+
+export async function POST(request: Request) {
+  try {
+    return await login(request);
+  } catch (error) {
+    console.error('FillEx login failed.', error);
+    return NextResponse.json(
+      { error: 'Sign in is temporarily unavailable. Please try again.' },
+      { status: 500 },
+    );
+  }
 }

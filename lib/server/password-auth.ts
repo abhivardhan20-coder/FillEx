@@ -3,7 +3,9 @@ import type { NextResponse } from 'next/server';
 import { getDatabase } from '@/lib/server/database';
 
 export const SESSION_COOKIE = 'fillex_session';
-export const PASSWORD_ITERATIONS = 210_000;
+// Cloudflare Workers currently caps Web Crypto PBKDF2 at 100,000 rounds.
+// Use the platform maximum and persist it with every password record.
+export const PASSWORD_ITERATIONS = 100_000;
 
 let authSchemaPromise: Promise<void> | null = null;
 

@@ -19,7 +19,7 @@ type SignupBody = {
   confirmPassword?: unknown;
 };
 
-export async function POST(request: Request) {
+async function signup(request: Request) {
   if (!trustedMutation(request))
     return NextResponse.json(
       { error: 'Request origin was not accepted.' },
@@ -119,4 +119,18 @@ export async function POST(request: Request) {
   );
   setSessionCookie(response, session.token, session.expires);
   return response;
+}
+
+export async function POST(request: Request) {
+  try {
+    return await signup(request);
+  } catch (error) {
+    console.error('FillEx signup failed.', error);
+    return NextResponse.json(
+      {
+        error: 'Account creation is temporarily unavailable. Please try again.',
+      },
+      { status: 500 },
+    );
+  }
 }
