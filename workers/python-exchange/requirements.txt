@@ -1,0 +1,2 @@
+nse[server] @ git+https://github.com/BennyThadikaran/NseIndiaApi.git@main
+bse @ git+https://github.com/BennyThadikaran/BseIndiaApi.git@main

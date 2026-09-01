@@ -1,0 +1,9 @@
+{
+  "name": "fillex-node-market-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": { "start": "node index.mjs" },
+  "dependencies": { "nse-bse-api": "0.1.3" }
+}
