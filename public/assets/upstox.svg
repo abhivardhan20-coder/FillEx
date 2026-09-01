@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100">
+  <defs>
+    <linearGradient id="upstox-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7B2CBF" />
+      <stop offset="100%" stop-color="#5A189A" />
+    </linearGradient>
+  </defs>
+  <!-- Upstox Logo Mark -->
+  <g transform="translate(10, 15)">
+    <rect x="0" y="0" width="70" height="70" rx="18" fill="url(#upstox-grad)" />
+    <!-- Stylized U with rising bar -->
+    <path d="M22 22 L22 42 C22 49 27 54 35 54 C43 54 48 49 48 42 L48 22" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="35" cy="32" r="4" fill="#00E5FF" />
+  </g>
+  <!-- Upstox Text -->
+  <text x="95" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="800" fill="#6A0572" letter-spacing="-0.5">upstox</text>
+</svg>

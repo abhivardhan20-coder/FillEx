@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 100" width="450" height="100">
+  <defs>
+    <linearGradient id="angel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B00" />
+      <stop offset="100%" stop-color="#FF3E00" />
+    </linearGradient>
+  </defs>
+  <!-- Angel One Logo Mark (Wings / A) -->
+  <g transform="translate(10, 15)">
+    <path d="M35 5 L58 60 L45 60 L35 32 L25 60 L12 60 Z" fill="url(#angel-grad)" />
+    <path d="M35 22 L45 46 L25 46 Z" fill="#FFFFFF" />
+    <circle cx="35" cy="62" r="5" fill="#FF6B00" />
+  </g>
+  <!-- Angel One Text -->
+  <text x="85" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="36" font-weight="800" fill="#0A1E40" letter-spacing="-0.5">Angel</text>
+  <text x="185" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="36" font-weight="800" fill="#FF6B00" letter-spacing="-0.5">One</text>
+</svg>
