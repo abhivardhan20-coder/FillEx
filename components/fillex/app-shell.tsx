@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, BrainCircuit, Cable, FileText, LayoutDashboard, Menu, PieChart, Search, X } from 'lucide-react';
+import { BarChart3, BrainCircuit, Cable, FileText, Landmark, LayoutDashboard, Menu, PieChart, Search, X } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 
 import { cn } from '@/lib/utils';
 
 const navigation = [
   { href: '/dashboard', label: 'Workspace', icon: LayoutDashboard },
+  { href: '/brokers', label: 'Broker accounts', icon: Landmark },
   { href: '/portfolio', label: 'Portfolio', icon: PieChart },
   { href: '/markets', label: 'Markets', icon: BarChart3 },
   { href: '/intelligence', label: 'Intelligence', icon: BrainCircuit },

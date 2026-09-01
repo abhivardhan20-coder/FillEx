@@ -6,9 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { cn } from '@/lib/utils';
 
 const sourceCards = [
-  { title: 'Portfolio', description: 'Add holdings manually or import a CSV. Broker sync becomes available after credentials are configured.', href: '/portfolio', action: 'Add holdings', icon: BriefcaseBusiness },
+  { title: 'Portfolio', description: 'Connect Groww or authorize Upstox to import real holdings and positions. Manual entry remains available.', href: '/brokers', action: 'Connect broker', icon: BriefcaseBusiness },
   { title: 'Market data', description: 'Search NSE and BSE through the no-key Yahoo Finance fallback while live-feed providers remain disconnected.', href: '/markets', action: 'Search markets', icon: Search },
-  { title: 'Evidence', description: 'Connect filings and news sources before generating evidence-backed intelligence.', href: '/filings', action: 'Review sources', icon: FileSearch },
+  { title: 'Evidence', description: 'Marketaux verified news is connected. Official filing evidence remains unavailable until its source is configured.', href: '/intelligence', action: 'View intelligence', icon: FileSearch },
 ];
 
 export default function DashboardPage() {
@@ -20,7 +20,7 @@ export default function DashboardPage() {
           <h1 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">Your workspace is clean and ready for real data.</h1>
           <p className="mt-4 max-w-2xl text-pretty text-sm leading-6 text-slate-300 md:text-base">FillEx does not preload sample holdings, prices, filings, or signals. Connect a source or add your own data to begin.</p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Link href="/integrations" className={cn(buttonVariants({ size: 'lg' }), 'bg-violet-500 hover:bg-violet-400')}><Cable /> Connect data sources <ArrowRight /></Link>
+            <Link href="/brokers" className={cn(buttonVariants({ size: 'lg' }), 'bg-violet-500 hover:bg-violet-400')}><Cable /> Connect your broker <ArrowRight /></Link>
             <Link href="/portfolio" className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'border-white/20 bg-white/8 text-white hover:bg-white/15 hover:text-white')}>Add portfolio manually</Link>
           </div>
         </div>

@@ -13,10 +13,11 @@ function hasAll(names: string[]) { return names.every((name) => Boolean(process.
 
 export function getProductionIntegrations(): Integration[] {
   const items = [
-    { name: 'Upstox', role: 'Primary broker data', href: 'https://github.com/upstox/upstox-nodejs', env: ['UPSTOX_API_KEY', 'UPSTOX_API_SECRET'] },
-    { name: 'Angel One SmartAPI', role: 'Primary broker data', href: 'https://github.com/angel-one/smartapi-javascript', env: ['ANGELONE_API_KEY'] },
-    { name: 'Zerodha Kite Connect', role: 'Primary broker data', href: 'https://github.com/zerodha/kiteconnectjs', env: ['ZERODHA_API_KEY', 'ZERODHA_API_SECRET'] },
-    { name: 'Groww', role: 'Primary broker data', href: 'https://groww.in/trade-api', env: ['GROWW_API_KEY'] },
+    { name: 'Upstox', role: 'Primary broker data', href: 'https://github.com/upstox/upstox-nodejs', env: ['UPSTOX_API_KEY', 'UPSTOX_API_SECRET', 'UPSTOX_REDIRECT_URI', 'BROKER_TOKEN_ENCRYPTION_KEY', 'INGESTION_WORKER_SECRET'] },
+    { name: 'Angel One SmartAPI', role: 'Primary broker data', href: 'https://github.com/angel-one/smartapi-javascript', env: ['ANGELONE_API_KEY', 'ANGELONE_REDIRECT_URI', 'ANGELONE_CLIENT_LOCAL_IP', 'ANGELONE_CLIENT_PUBLIC_IP', 'ANGELONE_MAC_ADDRESS', 'BROKER_TOKEN_ENCRYPTION_KEY', 'INGESTION_WORKER_SECRET'] },
+    { name: 'Zerodha Kite Connect', role: 'Primary broker data', href: 'https://github.com/zerodha/kiteconnectjs', env: ['ZERODHA_API_KEY', 'ZERODHA_API_SECRET', 'ZERODHA_REDIRECT_URI', 'BROKER_TOKEN_ENCRYPTION_KEY', 'INGESTION_WORKER_SECRET'] },
+    { name: 'Groww', role: 'User-authorized portfolio data', href: 'https://groww.in/trade-api', env: ['GROWW_API_KEY', 'GROWW_API_SECRET', 'BROKER_TOKEN_ENCRYPTION_KEY', 'INGESTION_WORKER_SECRET'] },
+    { name: 'Marketaux', role: 'Verified financial news', href: 'https://www.marketaux.com/documentation', env: ['MARKETAUX_API_KEY'] },
     { name: 'FinancialFilings', role: 'Licensed filing data', href: 'https://financialfilings.com/developers/reference/', env: ['FINANCIALFILINGS_API_KEY'] },
     { name: 'NewsAPI', role: 'Verified news feed', href: 'https://newsapi.org/docs', env: ['NEWSAPI_KEY'] },
     { name: 'GNews', role: 'Verified news feed', href: 'https://docs.gnews.io/', env: ['GNEWS_API_KEY'] },
