@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink as Link } from '@/components/fillex/app-link';
 import { ArrowRight, BriefcaseBusiness, Cable, FileSearch, Search, ShieldCheck } from 'lucide-react';
 
 import { buttonVariants } from '@/components/ui/button';

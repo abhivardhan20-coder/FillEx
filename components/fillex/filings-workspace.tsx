@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { AppLink as Link } from '@/components/fillex/app-link';
 import { ExternalLink, FileSearch, Search, ShieldCheck } from 'lucide-react';
 import { useState, type SyntheticEvent } from 'react';
 

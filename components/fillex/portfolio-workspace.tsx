@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { AppLink as Link } from '@/components/fillex/app-link';
 import { ArrowRight, FileUp, Landmark, Plus, ShieldCheck, Trash2, WalletCards } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type SyntheticEvent } from 'react';
 

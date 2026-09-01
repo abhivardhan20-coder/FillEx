@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink as Link } from '@/components/fillex/app-link';
 import {
   ArrowRight,
   ArrowUpRight,
