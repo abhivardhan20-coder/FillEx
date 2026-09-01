@@ -1,10 +1,27 @@
-import { headers } from 'next/headers';
+import { cookies } from 'next/headers';
 
-export type SiteUser = { id: string; email: string | null };
+import { getDatabase } from '@/lib/server/database';
+import {
+  ensureAuthSchema,
+  hashSessionToken,
+  SESSION_COOKIE,
+} from '@/lib/server/password-auth';
+
+export type SiteUser = { id: string; email: string; name: string };
 
 export async function getSiteUser(): Promise<SiteUser | null> {
-  const requestHeaders = await headers();
-  const id = requestHeaders.get('oai-authenticated-user-id');
-  if (!id) return null;
-  return { id, email: requestHeaders.get('oai-authenticated-user-email') };
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
+  if (!token) return null;
+  try {
+    await ensureAuthSchema();
+    return await getDatabase()
+      .prepare(`SELECT sessions.user_id AS id, accounts.email, accounts.display_name AS name
+      FROM auth_sessions AS sessions
+      INNER JOIN password_accounts AS accounts ON accounts.user_id = sessions.user_id
+      WHERE sessions.id_hash = ? AND sessions.expires_at > datetime('now')`)
+      .bind(await hashSessionToken(token))
+      .first<SiteUser>();
+  } catch {
+    return null;
+  }
 }

@@ -9,6 +9,8 @@ import {
   FileText,
   Landmark,
   LayoutDashboard,
+  LoaderCircle,
+  LogOut,
   Menu,
   PieChart,
   Search,
@@ -82,6 +84,38 @@ function NavLinks({
   );
 }
 
+function SignOutButton() {
+  const [signingOut, setSigningOut] = useState(false);
+
+  async function signOut() {
+    setSigningOut(true);
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+      });
+    } finally {
+      window.location.assign('/');
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      disabled={signingOut}
+      onClick={signOut}
+      className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-60"
+    >
+      {signingOut ? (
+        <LoaderCircle className="size-4 animate-spin" />
+      ) : (
+        <LogOut className="size-4" />
+      )}
+      {signingOut ? 'Signing out…' : 'Sign out'}
+    </button>
+  );
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -107,6 +141,9 @@ export function AppShell({ children }: { children: ReactNode }) {
             Add API credentials when available. No demo data is being shown.
           </p>
         </div>
+        <div className="border-t p-3">
+          <SignOutButton />
+        </div>
       </aside>
 
       {mobileOpen && (
@@ -117,7 +154,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="relative h-full w-72 border-r bg-card p-4 shadow-2xl">
+          <aside className="relative flex h-full w-72 flex-col border-r bg-card p-4 shadow-2xl">
             <div className="mb-6 flex items-center justify-between">
               <Brand />
               <button
@@ -133,6 +170,9 @@ export function AppShell({ children }: { children: ReactNode }) {
               pathname={pathname}
               onNavigate={() => setMobileOpen(false)}
             />
+            <div className="mt-auto border-t pt-3">
+              <SignOutButton />
+            </div>
           </aside>
         </div>
       )}
