@@ -8,7 +8,7 @@ import { useState, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
 const navigation = [
-  { href: '/', label: 'Overview', icon: LayoutDashboard },
+  { href: '/dashboard', label: 'Workspace', icon: LayoutDashboard },
   { href: '/portfolio', label: 'Portfolio', icon: PieChart },
   { href: '/markets', label: 'Markets', icon: BarChart3 },
   { href: '/intelligence', label: 'Intelligence', icon: BrainCircuit },
@@ -18,7 +18,7 @@ const navigation = [
 
 function Brand() {
   return (
-    <Link href="/" className="flex items-center gap-2.5" aria-label="FillEx overview">
+    <Link href="/" className="flex items-center gap-2.5" aria-label="FillEx home">
       <span className="flex size-9 items-center justify-center rounded-xl bg-violet-600 text-white shadow-lg shadow-violet-600/20"><span className="text-sm font-black tracking-tight">FX</span></span>
       <span><span className="block text-base font-bold tracking-tight">FillEx</span><span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Intelligence</span></span>
     </Link>
@@ -43,6 +43,8 @@ function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  if (pathname === '/') return <>{children}</>;
 
   return (
     <div className="min-h-screen bg-background">

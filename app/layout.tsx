@@ -16,16 +16,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: 'FillEx — Explainable portfolio intelligence',
-  description: 'Multi-agent financial intelligence that turns market signals, filings, and portfolio risk into transparent, profile-aware insights.',
+  description: 'Source-first portfolio intelligence for Indian markets, connecting holdings, market context, and official evidence without fabricated signals.',
   openGraph: {
     title: 'FillEx — Explainable portfolio intelligence',
-    description: 'Market signals, official filings, and portfolio risk — synthesized transparently.',
+    description: 'Holdings, market context, and official evidence — connected transparently.',
     images: [{ url: '/og.png', width: 1200, height: 630, alt: 'FillEx explainable portfolio intelligence' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'FillEx — Explainable portfolio intelligence',
-    description: 'Market signals, official filings, and portfolio risk — synthesized transparently.',
+    description: 'Holdings, market context, and official evidence — connected transparently.',
     images: ['/og.png'],
   },
 };
